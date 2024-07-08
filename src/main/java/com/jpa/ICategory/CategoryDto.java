@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class CategoryDto {
+public class CategoryDto implements ICategory{
     private Long id;
     private String name;
 }
