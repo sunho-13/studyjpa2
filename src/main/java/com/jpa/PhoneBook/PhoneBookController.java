@@ -1,4 +1,4 @@
-package com.jpa;
+package com.jpa.PhoneBook;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -129,7 +129,7 @@ public class PhoneBookController {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
- 
+
     }
 
     @GetMapping("/pn/{phoneNumber}")

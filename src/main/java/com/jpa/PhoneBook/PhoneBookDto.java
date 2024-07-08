@@ -1,6 +1,5 @@
-package com.jpa;
+package com.jpa.PhoneBook;
 
-import jakarta.persistence.Id;
 import lombok.*;
 
 @Getter

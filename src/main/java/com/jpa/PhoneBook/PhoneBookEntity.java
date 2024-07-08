@@ -1,4 +1,4 @@
-package com.jpa;
+package com.jpa.PhoneBook;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name="phonebook_tbl")
-public class PhoneBookEntity implements IPhoneBook{
+public class PhoneBookEntity implements IPhoneBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

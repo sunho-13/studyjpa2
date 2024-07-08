@@ -1,4 +1,4 @@
-package com.jpa;
+package com.jpa.PhoneBook;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class PhoneBookRequest implements IPhoneBook{
+public class PhoneBookRequest implements IPhoneBook {
     @JsonIgnore
     private Long id;
 

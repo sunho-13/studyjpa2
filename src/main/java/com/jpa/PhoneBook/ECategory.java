@@ -1,6 +1,4 @@
-package com.jpa;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
+package com.jpa.PhoneBook;
 
 public enum ECategory {
     Friends(0),
