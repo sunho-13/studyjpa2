@@ -1,5 +1,8 @@
 package com.jpa.PhoneBook;
 
+import com.jpa.ICategory.CategoryDto;
+import com.jpa.ICategory.CategoryEntity;
+import com.jpa.ICategory.ICategory;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +123,9 @@ public class PhoneBookController {
             if(category==null){
                 return ResponseEntity.badRequest().build();
             }
-            List<IPhoneBook> result = this.phoneBookService.getListFromCategory(ECategory.integerOf(category));
+            CategoryEntity entity = CategoryEntity.builder().
+                    id((Long.parseLong(category.toString()))).build();
+            List<IPhoneBook> result = this.phoneBookService.getListFromCategory(entity);
             if(result==null || result.size() <= 0){
                 return ResponseEntity.notFound().build();
             }

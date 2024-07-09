@@ -1,3 +1,4 @@
+/*
 package com.jpa.PhoneBook;
 
 public enum ECategory {
@@ -30,3 +31,4 @@ public enum ECategory {
     }
 
 }
+*/
