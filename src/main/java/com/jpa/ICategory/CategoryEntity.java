@@ -7,16 +7,16 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="category_tbl")
 public class CategoryEntity implements ICategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
 
     @NotNull
-    @Column(length = 20, unique = true)
+    @Column(length = 20, unique=true)
     private String name;
 }

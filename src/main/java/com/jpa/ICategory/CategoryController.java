@@ -1,11 +1,5 @@
 package com.jpa.ICategory;
 
-import com.jpa.ICategory.ICategory;
-import com.jpa.ICategory.ICategoryService;
-import com.jpa.ICategory.CategoryController;
-import com.jpa.ICategory.CategoryDto;
-
-import jdk.jfr.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,25 +11,25 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/cg")
+@RequestMapping("/ct")
 public class CategoryController {
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
-    private ICategoryService iCategoryService;
+    private ICategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<ICategory> insert(@RequestBody CategoryDto dto){
-        try{
-            if(dto==null){
+    public ResponseEntity<ICategory> insert(@RequestBody CategoryDto dto) {
+        try {
+            if ( dto == null ) {
                 return ResponseEntity.badRequest().build();
             }
-            ICategory result = this.iCategoryService.insert(dto);
-            if(result==null){
+            ICategory result = this.categoryService.insert(dto);
+            if ( result == null ) {
                 return ResponseEntity.badRequest().build();
             }
             return ResponseEntity.ok(result);
-        }catch(Exception ex){
+        } catch ( Exception ex ) {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
@@ -43,80 +37,77 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<ICategory>> getAll() {
-        try{
-            List<ICategory> result = this.iCategoryService.getAllList();
+        try {
+            List<ICategory> result = this.categoryService.getAllList();
             return ResponseEntity.ok(result);
-        }catch(Exception ex){
+        } catch ( Exception ex ) {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id){
-        try{
-            if(id==null){
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+        try {
+            if ( id == null ) {
                 return ResponseEntity.badRequest().build();
             }
-            Boolean result = this.iCategoryService.remove(id);
+            Boolean result = this.categoryService.remove(id);
             return ResponseEntity.ok(result);
-        }catch(Exception ex){
+        } catch ( Exception ex ) {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ICategory> update(@PathVariable Long id, @RequestBody CategoryDto dto){
-        try{
-            if(id==null || dto==null){
+    public ResponseEntity<ICategory> update(@PathVariable Long id, @RequestBody CategoryDto dto) {
+        try {
+            if ( id == null || dto == null ) {
                 return ResponseEntity.badRequest().build();
             }
-            ICategory result = this.iCategoryService.update(id, dto);
-
-            if(result==null){
+            ICategory result = this.categoryService.update(id, dto);
+            if ( result == null ) {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(result);
-        }catch(Exception ex){
+        } catch ( Exception ex ) {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ICategory> findById(@PathVariable Long id){
-        try{
-            if(id==null || id <= 0 ){
+    public ResponseEntity<ICategory> findById(@PathVariable Long id) {
+        try {
+            if ( id == null || id <= 0 ) {
                 return ResponseEntity.badRequest().build();
             }
-            ICategory result = this.iCategoryService.findById(id);
-            if(result==null){
+            ICategory result = this.categoryService.findById(id);
+            if ( result == null ) {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(result);
-        }catch(Exception ex){
+        } catch ( Exception ex ) {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
     }
 
-
     @GetMapping("/nm/{name}")
-    public ResponseEntity<List<ICategory>> findAllByNameContains(@PathVariable String name){
-        try{
-            if(name==null || name.isEmpty()){
+    public ResponseEntity<List<ICategory>> findAllByNameContains(@PathVariable String name) {
+        try {
+            if ( name == null || name.isEmpty() ) {
                 return ResponseEntity.badRequest().build();
             }
-            List<ICategory> result = this.iCategoryService.findAllByNameContains(name);
-            if(result==null || result.size() <= 0){
+            List<ICategory> result = this.categoryService.findAllByNameContains(name);
+            if ( result == null || result.size() <= 0 ) {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(result);
-        }catch(Exception ex){
+        } catch ( Exception ex ) {
             logger.error(ex.toString());
             return ResponseEntity.badRequest().build();
         }
-
     }
 }

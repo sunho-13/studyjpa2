@@ -1,6 +1,5 @@
 package com.jpa.ICategory;
 
-import com.jpa.PhoneBook.IPhoneBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,24 +9,12 @@ import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
-
     @Autowired
     private CategoryJpaRepository categoryJpaRepository;
 
-    private boolean isValidInsert(IPhoneBook dto) {
-        if (dto == null) {
-            return false;
-        } else if (dto.getName() == null || dto.getName().isEmpty()) {
-            return false;
-        } else if (dto.getCategory() == null) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public ICategory findById(Long id) {
-        if(id==null || id <= 0){
+        if ( id == null || id <= 0 ) {
             return null;
         }
         Optional<CategoryEntity> entity = this.categoryJpaRepository.findById(id);
@@ -36,7 +23,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public ICategory findByName(String name) {
-        if(name ==null || name.isEmpty()){
+        if ( name == null || name.isEmpty() ) {
             return null;
         }
         Optional<CategoryEntity> find = this.categoryJpaRepository.findByName(name);
@@ -52,33 +39,37 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     private List<ICategory> getICategoryList(List<CategoryEntity> list) {
-        if (list == null || list.size() <= 0) {
-
+        if ( list == null || list.size() <= 0 ) {
             return new ArrayList<>();
         }
-        List<ICategory> result = new ArrayList<>();
-
-        for (CategoryEntity entity : list) {
-            result.add((ICategory) entity);
-        }
+        // input : [CategoryEntity|CategoryEntity|CategoryEntity|CategoryEntity|CategoryEntity]
+//        List<ICategory> result = new ArrayList<>();
+//        for( CategoryEntity entity : list ) {
+//            result.add( (ICategory)entity );
+//        }
+        List<ICategory> result = list.stream()
+                .map(entity -> (ICategory)entity)
+                .toList();
+        // return : [ICategory|ICategory|ICategory|ICategory|ICategory]
         return result;
     }
 
     @Override
     public ICategory insert(ICategory category) throws Exception {
-        if (isValidInsert(category)) {
+        if ( !isValidInsert(category) ) {
             return null;
         }
-        CategoryEntity entity = CategoryEntity.builder()
-                .id(0L).name(category.getName()).build();
-        CategoryEntity result = this.categoryJpaRepository.saveAndFlush(entity);
+        CategoryEntity entity = new CategoryEntity();
+        entity.copyFields(category);
+        entity.setId(0L);
+        ICategory result = this.categoryJpaRepository.saveAndFlush(entity);
         return result;
     }
 
-    private boolean isValidInsert(ICategory category){
-        if(category == null){
+    private boolean isValidInsert(ICategory category) {
+        if ( category == null ) {
             return false;
-        }else if(category.getName() == null || category.getName().isEmpty()){
+        } else if ( category.getName() == null || category.getName().isEmpty() ) {
             return false;
         }
         return true;
@@ -87,7 +78,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public boolean remove(Long id) throws Exception {
         ICategory find = this.findById(id);
-        if(find == null){
+        if ( find == null ) {
             return false;
         }
         this.categoryJpaRepository.deleteById(id);
@@ -97,21 +88,22 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public ICategory update(Long id, ICategory category) throws Exception {
         ICategory find = this.findById(id);
-        if(find == null){
+        if ( find == null ) {
             return null;
         }
         find.copyFields(category);
-        CategoryEntity result = this.categoryJpaRepository.saveAndFlush((CategoryEntity)find);
+        ICategory result = this.categoryJpaRepository.saveAndFlush((CategoryEntity)find);
         return result;
     }
 
     @Override
     public List<ICategory> findAllByNameContains(String name) {
-        if(name==null || name.isEmpty()){
-            return List.of();
+        if ( name == null || name.isEmpty() ) {
+            //return List.of();
+            return new ArrayList<>();
         }
         List<ICategory> list = this.getICategoryList(
-            this.categoryJpaRepository.findAllByNameContains(name)
+                this.categoryJpaRepository.findAllByNameContains(name)
         );
         return list;
     }

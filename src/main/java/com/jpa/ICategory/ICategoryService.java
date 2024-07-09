@@ -8,6 +8,6 @@ public interface ICategoryService {
     List<ICategory> getAllList();
     ICategory insert(ICategory category) throws Exception;
     boolean remove(Long id) throws Exception;
-    ICategory update(Long id, ICategory cateogry) throws Exception;
+    ICategory update(Long id, ICategory category) throws Exception;
     List<ICategory> findAllByNameContains(String name);
 }
